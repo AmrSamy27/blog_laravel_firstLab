@@ -1,14 +1,16 @@
-@extends('layouts/layout')
+@extends('layouts/app')
 @section('content')
 <div class="container">
 <div class="row">
+@if($post)
+
 <table class="table">
 <thead>
     <tr>
-      <th scope="col"></th>
+      <th scope="col">Post Info</th>
       <th scope="col"> </th>
-      <th scope="col"><a href="/posts/create" class="btn btn-success">Create Post</a></th>
       <th scope="col"></th>
+      <th scope="col"><a href="/posts/create" class="btn btn-success">Create Post</a></th>
     </tr>
   </thead>
   <thead>
@@ -21,7 +23,7 @@
   </thead>
 
   <tbody>
-  @if($post)
+  
     <tr>
       <th scope="row">ID</th>
       <td>{{$post['id']}}</td>
@@ -59,9 +61,53 @@
     </td>
 </tr>
 
-   @endif
+  
   </tbody>
-</table>
+</table> 
+
+
+<table class="table">
+<thead>
+    <tr>
+      <th scope="col">Post Creator Info</th>
+      <th scope="col"> </th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <thead>
+    
+    <tr></tr>
+    <tr></tr>
+    <tr></tr>
+    <tr></tr>
+    <tr></tr>
+  </thead>
+
+  <tbody>
+  
+    <tr>
+      <th scope="row">Name</th>
+      <td>{{$post->user->name}}</td>
+
+    </tr>
+    <tr>
+      <th scope="row">Email</th>
+      <td>{{$post->user->email}}</td>
+
+    </tr>
+    <tr>
+      <th scope="row">Registered At</th>
+      <td>{{$post->user->created_at}}</td>
+
+    </tr>
+    
+   
+
+  
+  </tbody>
+</table> 
+@endif
 </div>
 </div>
 @endsection

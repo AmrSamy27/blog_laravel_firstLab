@@ -1,20 +1,26 @@
-@extends('layouts/layout')
+@extends('layouts/app')
 @section('content')
 
-<nav id="navBar" class="navbar navbar-expand-lg navbar-dark bg-dark  mb-5  ">
-                <a class="navbar-brand text-white" href="/posts">ITI Blog</a>
-                
-              <!-- class colapse to make it colapsed by default till toggler is pressed navbar-collaps to make it appear -->
-                
-                      <a class="navbar-brand text-white "  href="/posts">All Posts <span class="sr-only">(current)</span></a>
-                   
-              </nav>
+
 <div class="container ">
- <form method="post" class="mt-5" action="/posts">
+ <form method="post" class="mt-5" enctype="multipart/form-data" action="/posts">
  @csrf
+ @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
   <div class="form-group">
     <label for="title">Title</label>
     <input name="title" type="text" class="form-control" >
+  </div>
+  <div class="form-group">
+    <label for="avatar">Upload Image</label>
+    <input name="avatars" type="file"  >
   </div>
   <div class="form-group">
     <label for="description">Description</label>
