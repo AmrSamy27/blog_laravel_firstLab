@@ -7,14 +7,17 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use App\Post;
 use App\Comment;
+use Illuminate\Support\Facades\Auth;
+
 
 class PostController extends Controller
 {
     public function index()
-    {
+    {   
+        $user = Auth::user();
         $comments=Comment::all();
         $posts = Post::paginate(2);
-        return view('index', ['posts' =>$posts,'comments'=>$comments]);
+        return view('index', ['posts' =>$posts,'comments'=>$comments,'user'=>$user]);
     }
     public function create()
     {

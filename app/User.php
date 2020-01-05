@@ -10,7 +10,9 @@ use Laravel\Passport\HasApiTokens;
 class User extends Authenticatable
 {
     use  HasApiTokens , Notifiable;
-
+    protected $hidden = [
+        'provider_name', 'provider_id', 'password', 'remember_token',
+    ];
     /**
      * The attributes that are mass assignable.
      *
@@ -25,9 +27,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+  
 
     /**
      * The attributes that should be cast to native types.
@@ -40,8 +40,5 @@ class User extends Authenticatable
     public function posts(){
         return $this->hasMany(Post::class);
     }
-    public function comments()
-    {
-        return $this->morphMany('App\Comment', 'commentable');
-    }
+    
 }

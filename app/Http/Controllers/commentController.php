@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Comment;
+use App\Post;
+
 class commentController extends Controller
 {
-    public function store()
+    public function store($id)
     {
-        $comment = new Comment;
-         $comment->body = request()->body ;
-         $comment->commentable_id=request()->user()->id;
-        $comment->save();
+        $post = Post::find($id);
+        $post->comments()->create([
+            'body' => request()->body,
+        ]);
+       
         return redirect('posts');
     }
 }
