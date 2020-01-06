@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-
 class StoreBlogRequest extends FormRequest
 {
     /**
@@ -25,9 +24,8 @@ class StoreBlogRequest extends FormRequest
      */
     public function rules()
     {
-        // Rule::uniqzzue('title')->ignore();
         return [
-            'title' => 'required|min:3|unique:posts,title,'. $this->id,
+            'title' => 'required|min:3|unique:posts,title,'. $this->id  , 
             'description' => 'required|min:10',
             'photo_name' => 'mimes:jpg,png',
            

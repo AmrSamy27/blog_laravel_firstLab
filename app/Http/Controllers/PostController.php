@@ -6,25 +6,31 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use App\Post;
+use App\Rules\LimitPosts;
 use App\Comment;
+use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Support\Responsable;
 
 
 class PostController extends Controller
 {
     public function index()
     {   
-        $user = Auth::user();
-        $comments=Comment::all();
-        $posts = Post::paginate(2);
-        return view('index', ['posts' =>$posts,'comments'=>$comments,'user'=>$user]);
+
+        $users = User::all();
+        $posts = Post::withTrashed()->paginate(2);
+        return view('Posts/index', ['posts' =>$posts,'users'=>$users]);
     }
     public function create()
     {
-        return view('create');
+        return view('Posts/create');
     }
     public function store(StoreBlogRequest $request)
     {
+        $request->validate([
+            'title'=>[new LimitPosts]
+    ]);
         $post = new Post;
          $image =  Storage::putFile('images', $request->file('avatars'));
          $request->avatars->move(public_path('images'), $image);
@@ -34,11 +40,11 @@ class PostController extends Controller
     }
     public function show($id)
     {
-        return view('post', ['post' => post::findOrFail($id)]);
+        return view('Post/post', ['post' => post::findOrFail($id)]);
     }
     public function edit($id)
     {
-        return view('edit', ['post' => post::findOrFail($id)]);
+        return view('Post/edit', ['post' => post::findOrFail($id)]);
     }
     public function update($id,StoreBlogRequest $request)
     {
@@ -57,4 +63,14 @@ class PostController extends Controller
         $post->forceDelete();
         return redirect('posts');
     }
+    public function softDelete($id){
+        $post =Post::find($id);
+        $post->Delete();
+        return redirect('posts');
+    }
+    public function restoreDeleted($id){
+        Post::withTrashed()->find($id)->restore();
+        return redirect('posts');
+    }
+    
 }
