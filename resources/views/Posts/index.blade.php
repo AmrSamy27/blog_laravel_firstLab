@@ -86,7 +86,7 @@
       <div class="col-md-2 mr-2">
       <a href="/posts/{{$post['id']}}"  class="btn btn-primary ">View</a>
       </div>
-<button id="ajax{{$post['id']}}" type="button" class="btn btn-primary " data-toggle="modal" data-target="#exampleModalCenter{{$post['id']}}">
+<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#exampleModalCenter{{$post['id']}}">
   Ajax Data
 </button>
 
@@ -138,16 +138,14 @@
     </tr>
    
 <script>
-document.getElementById("ajax{{$post['id']}}").addEventListener('click',function(){
-  fetch("http://127.0.0.1:8000/posts/ajax/{{ $post['id'] }}").then(function(response){
+
+fetch("http://127.0.0.1:8000/posts/ajax/{{ $post['id'] }}").then(function(response){
    return response.json();
 }).then(function(result){
 createElementForPost(result);
 }).catch(function(error){
 alert(error);
 });
-})
-
 </script>
 @elseif($post->trashed())
 <tr><td>
