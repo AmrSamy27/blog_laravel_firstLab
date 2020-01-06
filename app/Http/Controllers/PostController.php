@@ -40,11 +40,11 @@ class PostController extends Controller
     }
     public function show($id)
     {
-        return view('Post/post', ['post' => post::findOrFail($id)]);
+        return view('Posts/post', ['post' => post::findOrFail($id)]);
     }
     public function edit($id)
     {
-        return view('Post/edit', ['post' => post::findOrFail($id)]);
+        return view('Posts/edit', ['post' => post::findOrFail($id)]);
     }
     public function update($id,StoreBlogRequest $request)
     {
